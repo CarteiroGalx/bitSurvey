@@ -199,3 +199,10 @@ async function buscarSaldo() {
     );
   }
 }
+
+window.onload = function () {
+  inicializarMural();
+  buscarSaldo();
+}
+
+buscarSaldo();
