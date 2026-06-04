@@ -348,3 +348,9 @@ header {
     font-size: 20px;
   }
 }
+
+#mural-bitlabs{
+  border-radius: 4px;
+  border: 1px solid var(--primary);
+  margin-bottom: 30px;
+}

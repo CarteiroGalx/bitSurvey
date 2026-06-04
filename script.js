@@ -159,7 +159,7 @@ const users = [
   },
 ];
 
-const APP_TOKEN = "CHAVE_API_AQUI";
+const APP_TOKEN = "d39251d4-7fb1-4649-ae3e-a0e32a34182d";
 
 const USUARIO_ID = users[0].id;
 
@@ -168,6 +168,7 @@ function inicializarMural() {
   const urlCompleta = `https://web.bitlabs.ai/?uid=${USUARIO_ID}&token=${APP_TOKEN}`;
 
   iframe.src = urlCompleta;
+  
 }
 
 async function buscarSaldo() {
@@ -203,7 +204,8 @@ async function buscarSaldo() {
 
 window.onload = function () {
   inicializarMural();
-  buscarSaldo();
+  setTimeout(function() {
+        console.log("3 segundos se passaram. Buscando saldo agora...");
+        buscarSaldo();
+    }, 3000);
 }
-
-buscarSaldo();
