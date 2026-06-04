@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot Grid Preloader</title>
+    <style>
+        /* Estrutura extraída do style.css */
+        * {
+            border: 0;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --hue: 223;
+            /* Fundo branco fixo */
+            --bg: hsl(0, 0%, 100%);
+            --fg: hsl(0, 0%, 5%);
+            --trans-dur: 0.3s;
+            font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font: 1em/1.5 sans-serif;
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+
+        .pl {
+            aspect-ratio: 1;
+            display: grid;
+            gap: 1em;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 8em;
+        }
+
+        .pl__dot {
+            position: relative;
+        }
+
+        .pl__dot,
+        .pl__dot::before,
+        .pl__dot::after {
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .pl__dot::before,
+        .pl__dot::after {
+            aspect-ratio: 1;
+            background-color: var(--fg);
+            border-radius: 50%;
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+        }
+
+        .pl__dot::after {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        /* Cores conforme o original */
+        .pl__dot--red::before,
+        .pl__dot--red::after {
+            background-color: #f53d3d;
+        }
+
+        .pl__dot--yellow::before,
+        .pl__dot--yellow::after {
+            background-color: #f2b90d;
+        }
+
+        .pl__dot--green::before,
+        .pl__dot--green::after {
+            background-color: #0ac266;
+        }
+
+        .pl__dot--blue::before,
+        .pl__dot--blue::after {
+            background-color: #0d80f2;
+        }
+
+        .pl__dot--lg::after {
+            width: 500%;
+        }
+
+        .pl__dot--sm::after {
+            width: 167%;
+        }
+
+        /* Lógica de animação idêntica ao original */
+        .pl__dot:nth-child(1)::before {
+            animation-name: dot-scale1;
+        }
+
+        .pl__dot:nth-child(2) {
+            animation-name: dot-rotate;
+            transform-origin: 50% 200%;
+        }
+
+        .pl__dot:nth-child(2)::before {
+            animation-name: dot-scale2;
+        }
+
+        .pl__dot:nth-child(3)::before {
+            animation-name: dot-scale3;
+        }
+
+        .pl__dot:nth-child(3)::after {
+            animation-name: dot-wave3;
+        }
+
+        .pl__dot:nth-child(4) {
+            animation-name: dot-rotate;
+            transform-origin: 200% 50%;
+        }
+
+        .pl__dot:nth-child(4)::before {
+            animation-name: dot-scale4;
+        }
+
+        .pl__dot:nth-child(5)::before {
+            animation-name: dot-scale5;
+        }
+
+        .pl__dot:nth-child(5)::after {
+            animation-name: dot-wave5a, dot-wave5b;
+        }
+
+        .pl__dot:nth-child(6) {
+            animation-name: dot-rotate;
+            transform-origin: -100% 50%;
+        }
+
+        .pl__dot:nth-child(6)::before {
+            animation-name: dot-scale6;
+        }
+
+        .pl__dot:nth-child(7)::before {
+            animation-name: dot-scale7;
+        }
+
+        .pl__dot:nth-child(7)::after {
+            animation-name: dot-wave7;
+        }
+
+        .pl__dot:nth-child(8) {
+            animation-name: dot-rotate;
+            transform-origin: 50% -100%;
+        }
+
+        .pl__dot:nth-child(8)::before {
+            animation-name: dot-scale8;
+        }
+
+        .pl__dot:nth-child(9)::before {
+            animation-name: dot-scale9;
+        }
+
+        .pl__dot:nth-child(9)::after {
+            animation-name: dot-wave9;
+        }
+
+        /* Keyframes idênticos */
+        @keyframes dot-rotate {
+
+            from,
+            22% {
+                animation-timing-function: ease-out;
+                transform: rotate(-45deg);
+            }
+
+            37%,
+            to {
+                transform: rotate(0);
+            }
+        }
+
+        @keyframes dot-scale1 {
+
+            from,
+            36% {
+                transform: translate(0, 0) scale(0);
+            }
+
+            50%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(75%, 75%) scale(0);
+            }
+        }
+
+        @keyframes dot-scale2 {
+
+            from,
+            25% {
+                animation-timing-function: ease-out;
+                transform: translate(0, 0) scale(0);
+            }
+
+            40%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(0, -100%) scale(0);
+            }
+        }
+
+        @keyframes dot-scale3 {
+
+            from,
+            27% {
+                animation-timing-function: ease-in;
+                transform: translate(0, 0) scale(0);
+            }
+
+            45%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(-75%, 75%) scale(0);
+            }
+        }
+
+        @keyframes dot-scale4 {
+
+            from,
+            28% {
+                animation-timing-function: ease-out;
+                transform: translate(0, 0) scale(0);
+            }
+
+            43%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(-100%, 0) scale(0);
+            }
+        }
+
+        @keyframes dot-scale5 {
+
+            from,
+            9%,
+            to {
+                transform: scale(0);
+            }
+
+            26% {
+                transform: scale(1.17);
+            }
+
+            41%,
+            75% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes dot-scale6 {
+
+            from,
+            22% {
+                animation-timing-function: ease-out;
+                transform: translate(0, 0) scale(0);
+            }
+
+            37%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(100%, 0) scale(0);
+            }
+        }
+
+        @keyframes dot-scale7 {
+
+            from,
+            36% {
+                animation-timing-function: ease-in;
+                transform: translate(0, 0) scale(0);
+            }
+
+            53%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(75%, -75%) scale(0);
+            }
+        }
+
+        @keyframes dot-scale8 {
+
+            from,
+            24% {
+                animation-timing-function: ease-out;
+                transform: translate(0, 0) scale(0);
+            }
+
+            39%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(0, 100%) scale(0);
+            }
+        }
+
+        @keyframes dot-scale9 {
+
+            from,
+            32% {
+                animation-timing-function: ease-in;
+                transform: translate(0, 0) scale(0);
+            }
+
+            49%,
+            71% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            87%,
+            to {
+                transform: translate(-75%, -75%) scale(0);
+            }
+        }
+
+        @keyframes dot-wave3 {
+            from {
+                visibility: hidden;
+            }
+
+            45% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(calc(1 / 1.67));
+                visibility: hidden;
+            }
+
+            61%,
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes dot-wave5a {
+            from {
+                transform: translate(-50%, -50%) scale(0.2);
+            }
+
+            8% {
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            25%,
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes dot-wave5b {
+
+            from,
+            25%,
+            to {
+                opacity: 0;
+            }
+
+            8% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes dot-wave7 {
+            from {
+                visibility: hidden;
+            }
+
+            53% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(calc(1 / 1.67));
+                visibility: hidden;
+            }
+
+            69%,
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes dot-wave9 {
+            from {
+                visibility: hidden;
+            }
+
+            49% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(calc(1 / 1.67));
+                visibility: hidden;
+            }
+
+            65%,
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pl">
+        <div class="pl__dot"></div>
+        <div class="pl__dot"></div>
+        <div class="pl__dot pl__dot--red pl__dot--sm"></div>
+        <div class="pl__dot"></div>
+        <div class="pl__dot pl__dot--yellow pl__dot--lg"></div>
+        <div class="pl__dot"></div>
+        <div class="pl__dot pl__dot--blue pl__dot--sm"></div>
+        <div class="pl__dot"></div>
+        <div class="pl__dot pl__dot--green pl__dot--sm"></div>
+    </div>
+</body>
+
+</html>

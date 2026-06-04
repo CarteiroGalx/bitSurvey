@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>BitSurveys Pro</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">BitSurveys</div>
+        <p>Saldo: <span id="saldo" style="font-weight: bold;">0</span></p>
+        <button class="settings-btn" onclick="toggleSidebar(true)"><i data-lucide="settings"></i></button>
+        
+    </header>
+
+    <div class="grid-container">
+        <div class="card" onclick="verificarResgate(20, 20000)">
+            <div class="circle-pts">20</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+        <div class="card" onclick="verificarResgate(50, 50000)">
+            <div class="circle-pts">50</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+        <div class="card" onclick="verificarResgate(100, 100000)">
+            <div class="circle-pts">100</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+        <div class="card" onclick="verificarResgate(200, 200000)">
+            <div class="circle-pts">200</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+        <div class="card" onclick="verificarResgate(300, 300000)">
+            <div class="circle-pts">300</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+        <div class="card" onclick="verificarResgate(500, 500000)">
+            <div class="circle-pts">500</div>
+            <h2>BRL</h2>
+            <p>PIX</p>
+        </div>
+    </div>
+
+    <div class="extrato-empty" id="aviso-vazio"><i data-lucide="inbox"></i>
+        <p>Não há notificações por enquanto.</p>
+    </div>
+    <div class="extrato-container" id="extrato-logs"></div>
+
+    <!-- Modais -->
+    <div class="modal-overlay" id="md-pix">
+        <div class="modal">
+            <h3 id="modal-titulo">RESGATAR PIX</h3><input type="text" id="pix-input"
+                placeholder="Chave PIX aqui"><button onclick="finalizarResgate()">SOLICITAR AGORA</button>
+            <p onclick="fecharModal('pix')"
+                style="margin-top:15px; cursor:pointer; text-align:center; text-decoration:underline;">voltar</p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="md-promo">
+        <div class="modal">
+            <h3>CÓDIGO PROMOCIONAL</h3><input type="text" id="promo-input" maxlength="19"
+                placeholder="0000-0000-0000-0000" oninput="aplicarMascaraPromo(this)"><button
+                onclick="ativarPromoCode()">ATIVAR CÓDIGO</button>
+            <p onclick="fecharModal('promo')"
+                style="margin-top:15px; cursor:pointer; text-align:center; text-decoration:underline;">voltar</p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="md-indicados">
+        <div class="modal">
+            <h3>CONVIDAR AMIGOS</h3>
+            <div class="code-box" onclick="copiarCodigo()"><span id="txt-codigo-unico">BIT-4819-SURV</span></div>
+            <div style="text-align:center; margin-bottom:20px; font-weight:bold;">Você tem: <span id="qtd-indicados"
+                    style="font-size:20px; font-weight:900;">0</span> amigos indicados</div>
+            <ul>
+                <li class="rule-item">Se cadastrou com link: ganha <b>750 moedas</b>.</li>
+                <li class="rule-item">Completou pesquisa: ganha <b>280 moedas extras</b>.</li>
+            </ul><button onclick="copiarCodigo()" style="margin-top:20px; background:var(--warning)">COPIAR
+                CÓDIGO</button>
+            <p onclick="fecharModal('indicados')"
+                style="margin-top:15px; cursor:pointer; text-align:center; text-decoration:underline;">voltar</p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="md-game">
+        <div class="modal modal-game">
+            <h3>MINI GAME BREAKOUT</h3><iframe id="game-iframe" class="game-frame" src=""></iframe><button
+                onclick="fecharModal('game', true)"
+                style="margin-top:15px; background:var(--danger); color:white;">FECHAR E RESGATAR MOEDAS</button>
+        </div>
+    </div>
+
+    <!-- Menu Lateral -->
+    <div id="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
+    <div id="settings-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3><button class="settings-btn" onclick="toggleSidebar(false)"><i data-lucide="x"></i></button>
+        </div>
+        <div class="sidebar-points"><i data-lucide="coins"></i><span id="menu-saldo-texto">2.500</span> pontos</div>
+        <div class="menu-item"><i data-lucide="clipboard-list"></i><span>Pesquisas</span></div>
+        <div class="menu-item" onclick="abrirModal('promo')"><i data-lucide="ticket"></i><span>Código Promocional</span>
+        </div>
+        <div class="menu-item" onclick="abrirModal('indicados')"><i data-lucide="users"></i><span>Meus Indicados</span>
+        </div>
+        <div class="menu-item"><i data-lucide="gem"></i><span>Ganhar Pontos</span></div>
+        <div class="menu-item"><i data-lucide="play-circle"></i><span>Assistir Anúncios</span></div>
+        <div class="menu-item" onclick="abrirModal('game')"><i data-lucide="gamepad-2"></i><span>Mini Jogos</span></div>
+        <div class="menu-item"><i data-lucide="coins"></i><span>Créditos</span></div>
+        <div class="menu-item"><i data-lucide="life-buoy"></i><span>Suporte</span></div>
+        <div class="menu-item logout" onclick="location.reload()"><i data-lucide="log-out"></i><span>Log out</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
