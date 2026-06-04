@@ -192,6 +192,7 @@ async function buscarSaldo() {
     const pontosAcumulados = resultado.data.val;
 
     txtSaldo.innerText = pontosAcumulados;
+    console.log("Saldo atualizado:", pontosAcumulados);
   } catch (error) {
     console.error("Falha ao buscar saldo na BitLabs:", error);
     alert(
